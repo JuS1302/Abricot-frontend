@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Couleurs principales */
+  --color-primary: #9747FF;
+  --color-primary-light: #E0ECFF;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Couleurs de statut */
+  --color-success: #27AE60;
+  --color-success-light: #F1FFF7;
+  --color-warning: #E08D00;
+  --color-warning-light: #FFF0D7;
+  --color-danger: #EF4444;
+  --color-danger-light: #FFE0E0;
+  --color-info: #3B82F6;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* Couleurs de texte */
+  --color-text-primary: #0F0F0F;
+  --color-text-secondary: #1F1F1F;
+  --color-text-muted: #6B7280;
+  --color-text-disabled: #9CA3AF;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Couleurs de fond */
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F9FAFB;
+  --color-bg-tertiary: #F3F4F6;
+
+  /* Bordures */
+  --color-border: #E5E7EB;
+  --color-border-dark: #C4C4C4;
+
+  /* Typographie */
+  --font-sans: 'Inter', sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+
+  /* Bordures arrondies */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
 }
