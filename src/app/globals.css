@@ -1,18 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  /* Couleurs principales */
-  --color-primary: #9747FF;
-  --color-primary-light: #E0ECFF;
+  /* Couleur principale */
+  --color-primary: #D3590B;      /* Orange principal - boutons, logo, accents */
+  --color-primary-light: #FFE8D9; /* Orange clair - backgrounds */
 
   /* Couleurs de statut */
-  --color-success: #27AE60;
-  --color-success-light: #F1FFF7;
-  --color-warning: #E08D00;
-  --color-warning-light: #FFF0D7;
-  --color-danger: #EF4444;
-  --color-danger-light: #FFE0E0;
-  --color-info: #3B82F6;
+  --color-success: #27AE60;      /* Vert - tâche terminée */
+  --color-success-light: #F1FFF7; /* Vert clair */
+  --color-warning: #E08D00;      /* Jaune/Orange - en cours */
+  --color-warning-light: #FFF0D7; /* Jaune clair */
+  --color-danger: #EF4444;       /* Rouge - erreur / suppression */
+  --color-danger-light: #FFE0E0; /* Rouge clair */
+  --color-info: #3B82F6;         /* Bleu - information */
+  --color-purple: #9747FF;       /* Violet - labels */
+  --color-purple-light: #E0ECFF; /* Violet clair */
 
   /* Couleurs de texte */
   --color-text-primary: #0F0F0F;

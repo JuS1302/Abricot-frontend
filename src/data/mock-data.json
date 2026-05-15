@@ -1,0 +1,76 @@
+{
+  "auth": {
+    "token": "fake-jwt-token-alice",
+    "user": {
+      "id": "1",
+      "name": "Alice Martin",
+      "email": "alice@example.com"
+    }
+  },
+
+  "userInfo": {
+    "id": "1",
+    "name": "Alice Martin",
+    "email": "alice@example.com"
+  },
+
+  "projects": [
+    {
+      "id": "1",
+      "name": "Refonte site web",
+      "description": "Refonte complète du site vitrine",
+      "ownerId": "1",
+      "owner": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" }
+    },
+    {
+      "id": "2",
+      "name": "Application mobile",
+      "description": "Développement app iOS/Android",
+      "ownerId": "2",
+      "owner": { "id": "2", "name": "Bob Dupont", "email": "bob@example.com" }
+    }
+  ],
+
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Maquettes homepage",
+      "description": "Créer les maquettes Figma",
+      "status": "TODO",
+      "priority": "HIGH",
+      "dueDate": "2026-05-20",
+      "projectId": "1",
+      "creatorId": "1",
+      "assignees": [
+        { "user": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" } }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Intégration navbar",
+      "description": "Intégrer la navbar responsive",
+      "status": "IN_PROGRESS",
+      "priority": "MEDIUM",
+      "dueDate": "2026-05-15",
+      "projectId": "1",
+      "creatorId": "1",
+      "assignees": [
+        { "user": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" } },
+        { "user": { "id": "2", "name": "Bob Dupont", "email": "bob@example.com" } }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Tests unitaires",
+      "description": "Écrire les tests Jest",
+      "status": "DONE",
+      "priority": "LOW",
+      "dueDate": "2026-05-10",
+      "projectId": "2",
+      "creatorId": "2",
+      "assignees": [
+        { "user": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" } }
+      ]
+    }
+  ]
+}
