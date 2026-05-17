@@ -15,6 +15,8 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  // typeof window !== 'undefined' : Next.js exécute aussi le code côté serveur (SSR),
+  // où localStorage n'existe pas. Cette vérification évite une erreur au build.
   const [token, setToken] = useState<string | null>(
     typeof window !== 'undefined' ? localStorage.getItem('token') : null
   )
