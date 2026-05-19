@@ -2,16 +2,7 @@ import mockData from "../data/mock-data.json"
 
 // Passe à false quand le backend est lancé
 const USE_MOCK = true
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
-
-
-function getToken(): string {
-  return localStorage.getItem('token') ?? ''
-}
-
-function authHeaders() {
-  return { "Authorization": `Bearer ${getToken()}` }
-}
+const API_URL = "http://localhost:8000"
 
 export const api = {
 
@@ -45,12 +36,12 @@ export const api = {
 
   // ===== USER =====
 
-  getUserInfo: async () => {
+  getUserInfo: async (token: string) => {
     if (USE_MOCK) {
       return mockData.userInfo
     }
     const response = await fetch(`${API_URL}/users/me`, {
-      headers: authHeaders()
+      headers: { "Authorization": `Bearer ${token}` }
     })
     if (!response.ok) throw new Error("Impossible de récupérer les infos utilisateur")
     return response.json()
@@ -58,23 +49,23 @@ export const api = {
 
   // ===== PROJETS =====
 
-  getProjects: async () => {
+  getProjects: async (token: string) => {
     if (USE_MOCK) {
       return mockData.projects
     }
     const response = await fetch(`${API_URL}/projects`, {
-      headers: authHeaders()
+      headers: { "Authorization": `Bearer ${token}` }
     })
     if (!response.ok) throw new Error("Impossible de récupérer les projets")
     return response.json()
   },
 
-  getProjectById: async (projectId: string) => {
+  getProjectById: async (token: string, projectId: string) => {
     if (USE_MOCK) {
       return mockData.projects.find(p => p.id === projectId)
     }
     const response = await fetch(`${API_URL}/projects/${projectId}`, {
-      headers: authHeaders()
+      headers: { "Authorization": `Bearer ${token}` }
     })
     if (!response.ok) throw new Error("Projet introuvable")
     return response.json()
@@ -82,23 +73,23 @@ export const api = {
 
   // ===== TÂCHES =====
 
-  getTasks: async () => {
+  getTasks: async (token: string) => {
     if (USE_MOCK) {
       return mockData.tasks
     }
     const response = await fetch(`${API_URL}/tasks`, {
-      headers: authHeaders()
+      headers: { "Authorization": `Bearer ${token}` }
     })
     if (!response.ok) throw new Error("Impossible de récupérer les tâches")
     return response.json()
   },
 
-  getTasksByProject: async (projectId: string) => {
+  getTasksByProject: async (token: string, projectId: string) => {
     if (USE_MOCK) {
       return mockData.tasks.filter(t => t.projectId === projectId)
     }
     const response = await fetch(`${API_URL}/projects/${projectId}/tasks`, {
-      headers: authHeaders()
+      headers: { "Authorization": `Bearer ${token}` }
     })
     if (!response.ok) throw new Error("Impossible de récupérer les tâches du projet")
     return response.json()

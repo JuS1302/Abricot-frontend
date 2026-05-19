@@ -15,27 +15,17 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  // typeof window !== 'undefined' : Next.js exécute aussi le code côté serveur (SSR),
-  // où localStorage n'existe pas. Cette vérification évite une erreur au build.
-  const [token, setToken] = useState<string | null>(
-    typeof window !== 'undefined' ? localStorage.getItem('token') : null
-  )
-  const [user, setUser] = useState<User | null>(() => {
-    if (typeof window === 'undefined') return null
-    const stored = localStorage.getItem('user')
-    return stored ? JSON.parse(stored) : null
-  })
+  // Token et user stockés uniquement en mémoire React (pas de localStorage)
+  // déconnexion automatique au rafraîchissement de la page
+  const [token, setToken] = useState<string | null>(null)
+  const [user, setUser] = useState<User | null>(null)
 
   const login = (token: string, user: User) => {
-    localStorage.setItem('token', token)
-    localStorage.setItem('user', JSON.stringify(user))
     setToken(token)
     setUser(user)
   }
 
   const logout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
     setToken(null)
     setUser(null)
   }
