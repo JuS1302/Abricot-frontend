@@ -10,7 +10,7 @@ export default function Link({ href, children, className = '' }: LinkProps) {
   return (
     <NextLink
       href={href}
-      className={`text-sm font-sans text-primary underline hover:opacity-75 transition-opacity ${className}`}
+      className={`text-sm font-sans text-primary underline hover:opacity-75 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:rounded-sm ${className}`}
     >
       {children}
     </NextLink>

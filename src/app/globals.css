@@ -14,8 +14,7 @@
   --color-danger: #EF4444;       /* Rouge - erreur / suppression */
   --color-danger-light: #FFE0E0; /* Rouge clair */
   --color-info: #3B82F6;         /* Bleu - information */
-  --color-purple: #9747FF;       /* Violet - labels */
-  --color-purple-light: #E0ECFF; /* Violet clair */
+  --color-info-light: #E0ECFF;   /* Bleu clair */
 
   /* Couleurs de texte */
   --color-text-primary: #0F0F0F;
@@ -27,6 +26,10 @@
   --color-bg-primary: #FFFFFF;
   --color-bg-secondary: #F9FAFB;
   --color-bg-tertiary: #F3F4F6;
+
+  /* Gris */
+  --color-gray: #6B7280;
+  --color-gray-light: #E5E7EB;
 
   /* Bordures */
   --color-border: #E5E7EB;
