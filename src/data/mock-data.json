@@ -18,16 +18,25 @@
     {
       "id": "1",
       "name": "Refonte site web",
-      "description": "Refonte complète du site vitrine",
+      "description": "Refonte complète du site vitrine avec une nouvelle charte graphique",
       "ownerId": "1",
-      "owner": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" }
+      "owner": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" },
+      "members": [
+        { "id": "m1", "role": "OWNER",       "user": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" } },
+        { "id": "m2", "role": "CONTRIBUTOR", "user": { "id": "2", "name": "Bob Dupont",   "email": "bob@example.com" } },
+        { "id": "m3", "role": "CONTRIBUTOR", "user": { "id": "3", "name": "Clara Vidal",  "email": "clara@example.com" } }
+      ]
     },
     {
       "id": "2",
       "name": "Application mobile",
-      "description": "Développement app iOS/Android",
+      "description": "Développement de l'application iOS et Android",
       "ownerId": "2",
-      "owner": { "id": "2", "name": "Bob Dupont", "email": "bob@example.com" }
+      "owner": { "id": "2", "name": "Bob Dupont", "email": "bob@example.com" },
+      "members": [
+        { "id": "m4", "role": "OWNER",       "user": { "id": "2", "name": "Bob Dupont",   "email": "bob@example.com" } },
+        { "id": "m5", "role": "CONTRIBUTOR", "user": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" } }
+      ]
     }
   ],
 

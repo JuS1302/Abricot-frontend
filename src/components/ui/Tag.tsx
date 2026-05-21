@@ -24,15 +24,17 @@ type TagProps = {
   // Optionnel : override le label par défaut (ex: nom d'un membre)
   label?: string
   className?: string
+  'aria-label'?: string
 }
 
-export default function Tag({ variant, label, className = '' }: TagProps) {
+export default function Tag({ variant, label, className = '', 'aria-label': ariaLabel }: TagProps) {
   const { classes, defaultLabel } = variants[variant]
   const text = label ?? defaultLabel
 
   return (
     <span
-      className={`inline-flex items-center px-3 h-[25px] rounded-full text-xs font-sans font-medium whitespace-nowrap ${classes} ${className}`}
+      aria-label={ariaLabel}
+      className={`inline-flex items-center px-4 h-[25px] rounded-full text-xs font-sans font-medium whitespace-nowrap ${classes} ${className}`}
     >
       {text}
     </span>

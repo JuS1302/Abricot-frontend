@@ -29,21 +29,21 @@ export default function TaskCard({ task, variant, projectName, onView }: TaskCar
     <div className="flex items-center gap-3 text-xs font-sans text-text-muted">
       <span className="flex items-center gap-1">
         {/* alt="" : icônes décoratives, le texte adjacent suffit */}
-        <Image src="/Nom-projet.png" alt="" width={14} height={14} />
+        <Image src="/Nom-projet.svg" alt="Icon" width={14} height={14} />
         {projectName ?? task.projectId}
       </span>
       {date && (
         <>
           <span aria-hidden="true">|</span>
           <span className="flex items-center gap-1">
-            <Image src="/Date.png" alt="Icon" width={14} height={14} />
+            <Image src="/Date.svg" alt="Icon" width={14} height={14} />
             {date}
           </span>
         </>
       )}
       <span aria-hidden="true">|</span>
       <span className="flex items-center gap-1">
-        <Image src="/Commentaire.png" alt="" width={14} height={14} />
+        <Image src="/Commentaire.svg" alt="Icon" width={14} height={14} />
         <span>
           <span className="sr-only">Commentaires : </span>
           {commentCount}
@@ -52,39 +52,56 @@ export default function TaskCard({ task, variant, projectName, onView }: TaskCar
     </div>
   )
 
-  const baseClasses = 'bg-bg-primary border border-border rounded-[10px] px-[40px] py-[25px]'
+  const baseClasses = 'bg-bg-primary border border-border rounded-[10px] px-4 py-4 md:px-[40px] md:py-[25px]'
 
   if (variant === 'liste') {
     return (
-      <article
-        aria-label={task.title}
-        className={`${baseClasses} flex justify-between items-stretch w-full h-[162px]`}
-      >
-        {/* Gauche : titre + description en haut, méta en bas */}
-        <div className="flex flex-col justify-between">
-          <div className="flex flex-col gap-1">
-            <h3 className="font-display font-semibold text-lg text-text-primary leading-none">
-              {task.title}
-            </h3>
-            {task.description && (
-              <p className="font-sans text-sm text-text-muted leading-none">
-                {task.description}
-              </p>
-            )}
-          </div>
-          {Meta}
-        </div>
+      <article aria-label={task.title} className={`${baseClasses} w-full`}>
+        {/* Mobile : layout vertical — Desktop : layout horizontal */}
+        <div className="flex flex-col md:flex-row md:justify-between md:items-stretch md:h-[112px]">
 
-        {/* Droite : tag en haut, bouton en bas */}
-        <div className="flex flex-col justify-between items-end">
-          <Tag variant={statusVariant} />
+          {/* Titre + description + méta */}
+          <div className="flex flex-col justify-between gap-3 md:gap-0">
+            <div className="flex flex-col gap-3">
+              {/* Sur mobile : titre + tag sur la même ligne */}
+              <div className="flex justify-between items-start gap-2 md:block">
+                <h3 className="font-display font-semibold text-lg text-text-primary leading-none">
+                  {task.title}
+                </h3>
+                <div className="md:hidden">
+                  <Tag variant={statusVariant} />
+                </div>
+              </div>
+              {task.description && (
+                <p className="font-sans text-sm text-text-muted leading-none">
+                  {task.description}
+                </p>
+              )}
+            </div>
+            {Meta}
+          </div>
+
+          {/* Desktop uniquement : tag en haut, bouton en bas à droite */}
+          <div className="hidden md:flex flex-col justify-between items-end">
+            <Tag variant={statusVariant} />
+            <Button
+              onClick={() => onView(task.id)}
+              className="w-[121px] px-6!"
+              aria-label={`Voir la tâche : ${task.title}`}
+            >
+              Voir
+            </Button>
+          </div>
+
+          {/* Mobile uniquement : bouton pleine largeur en bas */}
           <Button
             onClick={() => onView(task.id)}
-            className="w-[121px]"
+            className="md:hidden w-full mt-4 px-6!"
             aria-label={`Voir la tâche : ${task.title}`}
           >
             Voir
           </Button>
+
         </div>
       </article>
     )
@@ -93,7 +110,8 @@ export default function TaskCard({ task, variant, projectName, onView }: TaskCar
   return (
     <article
       aria-label={task.title}
-      className={`${baseClasses} flex flex-col gap-[32px] w-[371px]`}
+      // w-full sur mobile, largeur fixe sur desktop
+      className={`${baseClasses} flex flex-col gap-[32px] w-full md:w-[371px]`}
     >
       {/* Haut : titre + tag inline, puis description */}
       <div className="flex flex-col gap-1">
@@ -111,11 +129,11 @@ export default function TaskCard({ task, variant, projectName, onView }: TaskCar
       </div>
 
       {/* Bas : méta + bouton */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-[32px]">
         {Meta}
         <Button
           onClick={() => onView(task.id)}
-          className="w-[121px]"
+          className="w-full md:w-[121px] px-6!"
           aria-label={`Voir la tâche : ${task.title}`}
         >
           Voir

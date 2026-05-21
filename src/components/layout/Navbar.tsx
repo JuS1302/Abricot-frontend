@@ -10,7 +10,7 @@ export default function Navbar() {
   const { initials } = useAuth()
 
   return (
-    <header className="w-full bg-white h-[94px] shadow-[0px_4px_12px_1px_#00000005]">
+    <header className="sticky top-0 z-50 w-full bg-white h-[94px] shadow-[0px_4px_12px_1px_#00000005]">
       {/* aria-label obligatoire quand plusieurs <nav> coexistent sur la page (WCAG 4.1.2) */}
       <nav aria-label="Navigation principale" className="px-4 md:px-[100px] h-full flex items-center justify-between">
 

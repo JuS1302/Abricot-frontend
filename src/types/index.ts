@@ -53,7 +53,6 @@ export type Project = {
   ownerId: string;
   owner?: User;
   members?: ProjectMember[];
-  tasks?: Task[];
   createdAt?: string;
   updatedAt?: string;
 };
