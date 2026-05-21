@@ -23,41 +23,42 @@ export default function TaskCardFull({ task }: TaskCardFullProps) {
   const statusVariant = statusToVariant(task.status)
 
   return (
-    <article className="bg-bg-primary border border-border rounded-[10px] p-6 flex flex-col gap-4">
+    <article className="relative bg-bg-primary border border-border rounded-[10px] p-6 flex flex-col gap-4">
 
-      {/* Titre + statut + bouton ··· */}
-      <div className="flex justify-between items-start gap-4">
-        <div className="flex items-center gap-3 flex-wrap">
+      {/* Bouton ··· en position absolue pour ne pas gonfler la hauteur du titre */}
+      <button
+        type="button"
+        aria-label="Options de la tâche"
+        className="absolute top-6 right-6 w-[57px] h-[57px] rounded-[10px] border border-border flex items-center justify-center text-text-muted hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      >
+        <svg width="16" height="4" viewBox="0 0 16 4" fill="none" aria-hidden="true">
+          <circle cx="2" cy="2" r="2" fill="currentColor" />
+          <circle cx="8" cy="2" r="2" fill="currentColor" />
+          <circle cx="14" cy="2" r="2" fill="currentColor" />
+        </svg>
+      </button>
+
+      {/* Titre + statut + description */}
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-3 flex-wrap pr-[73px]">
           <h3 className="font-display font-semibold text-lg text-text-primary leading-none">
             {task.title}
           </h3>
           <Tag variant={statusVariant} />
         </div>
-        <button
-          type="button"
-          aria-label="Options de la tâche"
-          className="text-text-muted hover:text-text-primary p-1 rounded-md flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-        >
-          <svg width="16" height="4" viewBox="0 0 16 4" fill="none" aria-hidden="true">
-            <circle cx="2" cy="2" r="2" fill="currentColor" />
-            <circle cx="8" cy="2" r="2" fill="currentColor" />
-            <circle cx="14" cy="2" r="2" fill="currentColor" />
-          </svg>
-        </button>
-      </div>
 
-      {/* Description */}
-      {task.description && (
-        <p className="font-sans text-sm text-text-muted leading-snug">
-          {task.description}
-        </p>
-      )}
+        {task.description && (
+          <p className="font-sans text-sm text-text-muted leading-snug">
+            {task.description}
+          </p>
+        )}
+      </div>
 
       {/* Échéance */}
       {date && (
-        <div className="flex items-center gap-2 font-sans text-sm text-text-muted">
+        <div className="flex items-center gap-2 font-sans text-xs text-text-primary">
           <span>Échéance :</span>
-          <Image src="/Date.svg" alt="" aria-hidden="true" width={14} height={14} />
+          <Image src="/Calendrier-noir.svg" alt="Icon" aria-hidden="true" width={14} height={14} />
           <span>{date}</span>
         </div>
       )}
@@ -65,7 +66,7 @@ export default function TaskCardFull({ task }: TaskCardFullProps) {
       {/* Assignés */}
       {task.assignees && task.assignees.length > 0 && (
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-sans text-sm text-text-muted">Assigné à :</span>
+          <span className="font-sans text-xs text-text-muted">Assigné à :</span>
           {task.assignees.map((assignee, index) => (
             <div key={assignee.userId ?? assignee.user.id ?? index} className="flex items-center gap-1.5">
               <UserIcon

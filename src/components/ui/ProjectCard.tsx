@@ -21,10 +21,10 @@ export default function ProjectCard({ project, tasks }: ProjectCardProps) {
 
       {/* Nom + description */}
       <div className="flex flex-col gap-3">
-        <h2 className="font-display font-semibold text-[18px] leading-none text-text-primary">
+        <h2 className="font-display font-semibold text-lg leading-none text-text-primary">
           {project.name}
         </h2>
-        <p className="font-sans text-[14px] leading-none text-text-muted line-clamp-2">
+        <p className="font-sans text-sm leading-none text-text-muted line-clamp-2">
           {project.description ?? '—'}
         </p>
       </div>
@@ -32,8 +32,8 @@ export default function ProjectCard({ project, tasks }: ProjectCardProps) {
       {/* Progression */}
       <div className="flex flex-col gap-2 flex-1">
         <div className="flex justify-between items-center">
-          <span className="font-sans text-[12px] leading-none text-text-muted">Progression</span>
-          <span className="font-sans text-[12px] leading-none text-text-primary">{progress}%</span>
+          <span className="font-sans text-xs leading-none text-text-muted">Progression</span>
+          <span className="font-sans text-xs leading-none text-text-primary">{progress}%</span>
         </div>
         <div
           className="h-[7px] w-full rounded-[40px] bg-border"

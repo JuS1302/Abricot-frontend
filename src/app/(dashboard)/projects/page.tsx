@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { api } from '@/lib/api'
+import Link from 'next/link'
 import Button from '@/components/ui/Button'
 import ProjectCard from '@/components/ui/ProjectCard'
 import type { Project, Task } from '@/types'
@@ -29,10 +30,10 @@ export default function ProjectsPage() {
       {/* En-tête de page */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-15">
         <div className="flex flex-col gap-3">
-          <h1 className="font-display font-semibold text-[24px] leading-none text-text-primary">
+          <h1 className="font-display font-semibold text-2xl leading-none text-text-primary">
             Mes projets
           </h1>
-          <p className="font-sans text-[18px] text-text-muted leading-none">
+          <p className="font-sans text-lg text-text-muted leading-none">
             Gérez vos projets
           </p>
         </div>
@@ -55,10 +56,12 @@ export default function ProjectsPage() {
         >
           {projects.map(project => (
             <li key={project.id} className="h-full">
-              <ProjectCard
-                project={project}
-                tasks={tasks.filter(t => t.projectId === project.id)}
-              />
+              <Link href={`/projects/${project.id}`} className="block h-full">
+                <ProjectCard
+                  project={project}
+                  tasks={tasks.filter(t => t.projectId === project.id)}
+                />
+              </Link>
             </li>
           ))}
         </ul>

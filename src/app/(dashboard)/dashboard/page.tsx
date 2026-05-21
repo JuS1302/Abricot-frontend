@@ -49,10 +49,10 @@ export default function DashboardPage() {
       {/* En-tête de page */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-15">
         <div className="flex flex-col gap-3">
-          <h1 className="font-display font-semibold text-[24px] leading-none text-text-primary">
+          <h1 className="font-display font-semibold text-2xl leading-none text-text-primary">
             Tableau de bord
           </h1>
-          <p className="font-sans text-[18px] text-text-muted leading-none">
+          <p className="font-sans text-lg text-text-muted leading-none">
             Bonjour {user?.name}, voici un aperçu de vos projets et tâches
           </p>
         </div>
@@ -110,7 +110,7 @@ function VueListe({ tasks, search, onSearch, getProjectName }: {
         <div className="relative w-full md:w-[280px]">
           <Image
             src="/Loupe.svg"
-            alt=""
+            alt="Icon Loupe"
             aria-hidden="true"
             width={14}
             height={14}
