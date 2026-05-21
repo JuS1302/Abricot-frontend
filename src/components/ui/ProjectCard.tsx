@@ -15,32 +15,28 @@ export default function ProjectCard({ project, tasks }: ProjectCardProps) {
   const progress = total > 0 ? Math.round((done / total) * 100) : 0
 
   const members = project.members ?? []
-  const sorted = [
-    ...members.filter(m => m.role === 'OWNER'),
-    ...members.filter(m => m.role !== 'OWNER'),
-  ]
 
   return (
-    <article className="bg-bg-primary border border-border rounded-[10px] p-6 flex flex-col gap-5">
+    <article className="bg-bg-primary border border-border rounded-[10px] p-8 flex flex-col gap-14 h-full">
 
       {/* Nom + description */}
-      <div className="flex flex-col gap-2">
-        <h2 className="font-display font-semibold text-lg text-text-primary leading-snug">
+      <div className="flex flex-col gap-3">
+        <h2 className="font-display font-semibold text-[18px] leading-none text-text-primary">
           {project.name}
         </h2>
-        <p className="font-sans text-sm text-text-muted line-clamp-2 leading-snug">
+        <p className="font-sans text-[14px] leading-none text-text-muted line-clamp-2">
           {project.description ?? '—'}
         </p>
       </div>
 
       {/* Progression */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 flex-1">
         <div className="flex justify-between items-center">
-          <span className="font-sans text-sm text-text-muted">Progression</span>
-          <span className="font-sans text-sm font-medium text-text-primary">{progress}%</span>
+          <span className="font-sans text-[12px] leading-none text-text-muted">Progression</span>
+          <span className="font-sans text-[12px] leading-none text-text-primary">{progress}%</span>
         </div>
         <div
-          className="h-1.5 w-full rounded-full bg-border"
+          className="h-[7px] w-full rounded-[40px] bg-border"
           role="progressbar"
           aria-valuenow={progress}
           aria-valuemin={0}
@@ -48,11 +44,11 @@ export default function ProjectCard({ project, tasks }: ProjectCardProps) {
           aria-label={`Progression du projet : ${progress}%`}
         >
           <div
-            className="h-full rounded-full bg-primary transition-all"
+            className="h-full rounded-[40px] bg-primary transition-all"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <p className="font-sans text-xs text-text-muted">
+        <p className="font-sans text-[10px] leading-none text-text-muted">
           {done}/{total} tâche{total !== 1 ? 's' : ''} terminée{done !== 1 ? 's' : ''}
         </p>
       </div>
@@ -61,28 +57,44 @@ export default function ProjectCard({ project, tasks }: ProjectCardProps) {
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-1.5 text-text-muted">
           <Image src="/Membres.svg" alt="" aria-hidden="true" width={12} height={11} />
-          <span className="font-sans text-sm">Équipe ({members.length})</span>
+          <span className="font-sans text-[10px] leading-none">Équipe ({members.length})</span>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
-          {sorted.map(member => {
-            const isOwner = member.role === 'OWNER'
-            const initials = getInitials(member.user.name ?? member.user.email)
-            return (
-              <div
-                key={member.id ?? member.user.id}
-                className="flex items-center gap-1.5"
-              >
+        <div className="flex items-center gap-2">
+          {/* Owner : avatar + tag "Propriétaire" */}
+          {members
+            .filter(m => m.role === 'OWNER')
+            .map(member => (
+              <div key={member.id ?? member.user.id} className="flex items-center gap-1.5">
+                <div title={member.user.name ?? member.user.email} aria-label={member.user.name ?? member.user.email}>
+                  <UserIcon initials={getInitials(member.user.name ?? member.user.email)} size="sm" color="primary" />
+                </div>
+                <Tag variant="owner" />
+              </div>
+            ))
+          }
+
+          {/* Autres membres : avatar stack avec chevauchement */}
+          <div className="flex items-center">
+            {members
+              .filter(m => m.role !== 'OWNER')
+              .map((member, index) => (
                 <div
+                  key={member.id ?? member.user.id}
+                  className={index > 0 ? '-ml-2' : ''}
                   title={member.user.name ?? member.user.email}
                   aria-label={member.user.name ?? member.user.email}
                 >
-                  <UserIcon initials={initials} size="sm" />
+                  <UserIcon
+                    initials={getInitials(member.user.name ?? member.user.email)}
+                    size="sm"
+                    color="neutral"
+                    className="ring-2 ring-white"
+                  />
                 </div>
-                {isOwner && <Tag variant="owner" />}
-              </div>
-            )
-          })}
+              ))
+            }
+          </div>
         </div>
       </div>
 

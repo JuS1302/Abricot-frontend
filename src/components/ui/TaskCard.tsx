@@ -27,7 +27,8 @@ export default function TaskCard({ task, variant, projectName, onView }: TaskCar
   // Métadonnées communes aux deux variants
   const Meta = (
     <div className="flex items-center gap-3 text-xs font-sans text-text-muted">
-      <span className="flex items-center gap-1">
+      <span className="flex items-center gap-2
+      ">
         {/* alt="" : icônes décoratives, le texte adjacent suffit */}
         <Image src="/Nom-projet.svg" alt="Icon" width={14} height={14} />
         {projectName ?? task.projectId}
@@ -35,14 +36,14 @@ export default function TaskCard({ task, variant, projectName, onView }: TaskCar
       {date && (
         <>
           <span aria-hidden="true">|</span>
-          <span className="flex items-center gap-1">
+          <span className="flex items-center gap-2">
             <Image src="/Date.svg" alt="Icon" width={14} height={14} />
             {date}
           </span>
         </>
       )}
       <span aria-hidden="true">|</span>
-      <span className="flex items-center gap-1">
+      <span className="flex items-center gap-2">
         <Image src="/Commentaire.svg" alt="Icon" width={14} height={14} />
         <span>
           <span className="sr-only">Commentaires : </span>
@@ -52,7 +53,7 @@ export default function TaskCard({ task, variant, projectName, onView }: TaskCar
     </div>
   )
 
-  const baseClasses = 'bg-bg-primary border border-border rounded-[10px] px-4 py-4 md:px-[40px] md:py-[25px]'
+  const baseClasses = 'bg-bg-primary border border-border rounded-[10px] p-8'
 
   if (variant === 'liste') {
     return (

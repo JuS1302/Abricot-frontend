@@ -31,7 +31,6 @@ export default function MenuItem({ href, label, icon, iconActive }: MenuItemProp
         }
       `}
     >
-      {/* alt="" car l'icône est décorative — le texte du lien suffit */}
       <Image
         src={isActive ? iconActive : icon}
         alt="Icon de menu"

@@ -80,6 +80,19 @@
       "assignees": [
         { "user": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" } }
       ]
+    },
+    {
+      "id": "4",
+      "title": "Maquettes projets",
+      "description": "Créer les maquettes Figma",
+      "status": "TODO",
+      "priority": "HIGH",
+      "dueDate": "2026-05-20",
+      "projectId": "1",
+      "creatorId": "1",
+      "assignees": [
+        { "user": { "id": "1", "name": "Alice Martin", "email": "alice@example.com" } }
+      ]
     }
   ]
 }

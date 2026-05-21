@@ -12,6 +12,7 @@ export const useLogin = () => {
     setError(null)
     try {
       const { token, user } = await api.login(email, password)
+      console.log(token);
       login(token, user)
       return true
     } catch (err: unknown) {

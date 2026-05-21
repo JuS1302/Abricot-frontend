@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { api } from '@/lib/api'
+import Image from 'next/image'
 import Chip from '@/components/ui/Chip'
 import TaskCard from '@/components/ui/TaskCard'
 import Button from '@/components/ui/Button'
@@ -97,7 +98,7 @@ function VueListe({ tasks, search, onSearch, getProjectName }: {
       className="border bg-bg-primary border-border rounded-[10px] p-4 md:p-[40px]"
     >
       {/* En-tête de la section */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-13">
         <div className="flex flex-col gap-3">
           <h2 className="font-display font-semibold text-lg text-text-primary leading-none">
             Mes tâches assignées
@@ -106,20 +107,30 @@ function VueListe({ tasks, search, onSearch, getProjectName }: {
         </div>
 
         {/* Champ de recherche */}
-        <input
-          type="search"
-          placeholder="Rechercher une tâche"
-          value={search}
-          onChange={e => onSearch(e.target.value)}
-          aria-label="Rechercher une tâche"
-          className="
-            h-[50px] w-full md:w-[280px]
-            border border-border rounded-[10px] px-4
-            font-sans text-sm text-text-primary placeholder:text-text-disabled
-            bg-bg-primary outline-none
-            focus:border-primary focus:ring-2 focus:ring-primary/30
-          "
-        />
+        <div className="relative w-full md:w-[280px]">
+          <Image
+            src="/Loupe.svg"
+            alt=""
+            aria-hidden="true"
+            width={14}
+            height={14}
+            className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none"
+          />
+          <input
+            type="text"
+            placeholder="Rechercher une tâche"
+            value={search}
+            onChange={e => onSearch(e.target.value)}
+            aria-label="Rechercher une tâche"
+            className="
+              h-[63px] w-full
+              border border-border rounded-[10px] pl-5 pr-10
+              font-sans text-sm text-text-primary placeholder:text-text-disabled
+              bg-bg-primary outline-none
+              focus:border-primary focus:ring-2 focus:ring-primary/30
+            "
+          />
+        </div>
       </div>
 
       {/* Liste */}
