@@ -10,6 +10,7 @@ type AuthContextType = {
   initials: string
   login: (token: string, user: User) => void
   logout: () => void
+  updateUser: (user: User) => void
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -30,10 +31,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null)
   }
 
+  const updateUser = (updatedUser: User) => {
+    setUser(updatedUser)
+  }
+
   const initials = user?.name ? getInitials(user.name) : ''
 
   return (
-    <AuthContext.Provider value={{ token, user, initials, login, logout }}>
+    <AuthContext.Provider value={{ token, user, initials, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   )

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import Logo from '@/components/ui/Logo'
 import MenuItem from '@/components/ui/MenuItem'
 import UserIcon from '@/components/ui/UserIcon'
@@ -8,6 +9,8 @@ import { useAuth } from '@/context/AuthContext'
 
 export default function Navbar() {
   const { initials } = useAuth()
+  const pathname = usePathname()
+  const isAccount = pathname === '/account'
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white h-[94px] shadow-[0px_4px_12px_1px_#00000005]">
@@ -33,7 +36,7 @@ export default function Navbar() {
 
         {/* aria-label nécessaire : UserIcon n'a pas de texte visible pour les lecteurs d'écran */}
         <Link href="/account" aria-label="Mon compte">
-          <UserIcon initials={initials} />
+          <UserIcon initials={initials} color={isAccount ? 'active' : 'primary'} />
         </Link>
 
       </nav>

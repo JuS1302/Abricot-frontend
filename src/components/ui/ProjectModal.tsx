@@ -206,9 +206,6 @@ export default function ProjectModal({ project, onClose, onSaved }: Props) {
                   className="flex-1 min-w-[120px] text-xs font-sans text-text-primary placeholder:text-text-disabled outline-none bg-transparent"
                 />
               </div>
-              <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true" className="shrink-0">
-                <path d="M1 1L6 6L11 1" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
             </div>
 
             {/* Résultats de recherche */}
