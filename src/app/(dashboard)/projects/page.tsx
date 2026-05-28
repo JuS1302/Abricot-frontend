@@ -6,6 +6,7 @@ import { api } from '@/lib/api'
 import Link from 'next/link'
 import Button from '@/components/ui/Button'
 import ProjectCard from '@/components/ui/ProjectCard'
+import ProjectModal from '@/components/ui/ProjectModal'
 import type { Project, Task } from '@/types'
 
 export default function ProjectsPage() {
@@ -13,6 +14,7 @@ export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [showCreateProject, setShowCreateProject] = useState(false)
 
   useEffect(() => {
     if (!token) return
@@ -37,7 +39,7 @@ export default function ProjectsPage() {
             Gérez vos projets
           </p>
         </div>
-        <Button className="w-full md:w-auto px-6!">+ Créer un projet</Button>
+        <Button className="w-full md:w-auto px-6!" onClick={() => setShowCreateProject(true)}>+ Créer un projet</Button>
       </div>
 
       {/* Grille de projets */}
@@ -65,6 +67,17 @@ export default function ProjectsPage() {
             </li>
           ))}
         </ul>
+      )}
+
+      {showCreateProject && (
+        <ProjectModal
+          onClose={() => setShowCreateProject(false)}
+          onSaved={() => {
+            setShowCreateProject(false)
+            if (!token) return
+            api.getProjects(token).then(setProjects)
+          }}
+        />
       )}
 
     </main>

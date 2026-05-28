@@ -9,6 +9,7 @@ import TaskCard from '@/components/ui/TaskCard'
 import Button from '@/components/ui/Button'
 import Tag from '@/components/ui/Tag'
 import TaskModal from '@/components/ui/TaskModal'
+import ProjectModal from '@/components/ui/ProjectModal'
 import type { Task, Project } from '@/types'
 
 type View = 'liste' | 'kanban'
@@ -28,6 +29,7 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const [editingProject, setEditingProject] = useState<Project | null>(null)
+  const [showCreateProject, setShowCreateProject] = useState(false)
 
   useEffect(() => {
     if (!token) return
@@ -77,7 +79,7 @@ export default function DashboardPage() {
             Bonjour {user?.name}, voici un aperçu de vos projets et tâches
           </p>
         </div>
-        <Button className="w-full md:w-auto px-6!">+ Créer un projet</Button>
+        <Button className="w-full md:w-auto px-6!" onClick={() => setShowCreateProject(true)}>+ Créer un projet</Button>
       </div>
 
       {/* Sélecteur de vue Liste / Kanban */}
@@ -110,6 +112,17 @@ export default function DashboardPage() {
           task={editingTask}
           onClose={handleModalClose}
           onSaved={handleModalSaved}
+        />
+      )}
+
+      {showCreateProject && (
+        <ProjectModal
+          onClose={() => setShowCreateProject(false)}
+          onSaved={() => {
+            setShowCreateProject(false)
+            if (!token) return
+            api.getProjects(token).then(setProjects)
+          }}
         />
       )}
 

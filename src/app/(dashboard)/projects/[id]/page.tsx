@@ -11,6 +11,7 @@ import Tag from '@/components/ui/Tag'
 import UserIcon from '@/components/ui/UserIcon'
 import TaskCardFull from '@/components/ui/TaskCardFull'
 import TaskModal from '@/components/ui/TaskModal'
+import ProjectModal from '@/components/ui/ProjectModal'
 import { getInitials } from '@/lib/utils'
 import type { Project, Task } from '@/types'
 
@@ -26,6 +27,7 @@ export default function ProjectPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [editingTask, setEditingTask] = useState<Task | null>(null)
+  const [showEditProject, setShowEditProject] = useState(false)
 
   useEffect(() => {
     if (!token) return
@@ -86,6 +88,7 @@ export default function ProjectPage() {
               </h1>
               <button
                 type="button"
+                onClick={() => setShowEditProject(true)}
                 className="font-sans text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
               >
                 Modifier
@@ -234,7 +237,6 @@ export default function ProjectPage() {
 
     {editingTask && (
       <TaskModal
-
         projectId={id}
         owner={project.owner ?? undefined}
         members={project.members ?? []}
@@ -244,6 +246,20 @@ export default function ProjectPage() {
           setEditingTask(null)
           if (!token) return
           api.getTasksByProject(token, id).then(setTasks)
+        }}
+      />
+    )}
+
+    {showEditProject && (
+      <ProjectModal
+        project={project}
+        onClose={() => setShowEditProject(false)}
+        onSaved={() => {
+          setShowEditProject(false)
+          if (!token) return
+          api.getProjectById(token, id)
+            .then(p => setProject(p ?? null))
+            .catch(() => router.push('/projects'))
         }}
       />
     )}

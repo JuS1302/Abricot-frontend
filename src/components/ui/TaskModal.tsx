@@ -211,7 +211,7 @@ export default function TaskModal({ projectId, owner, members, task, onClose, on
 
       </div>
 
-      <div className="flex flex-col gap-3 w-full">
+      <div className="flex items-center justify-between gap-3 w-full">
         <Button
           onClick={handleSubmit}
           disabled={!isValid || isSubmitting}
@@ -233,3 +233,4 @@ export default function TaskModal({ projectId, owner, members, task, onClose, on
     </Modal>
   )
 }
+

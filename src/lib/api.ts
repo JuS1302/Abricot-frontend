@@ -118,6 +118,62 @@ export const api = {
     return json.data
   },
 
+  searchUsers: async (token: string, query: string) => {
+    const response = await fetch(`${API_URL}/users/search?query=${encodeURIComponent(query)}`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+    if (!response.ok) throw new Error("Impossible de rechercher des utilisateurs")
+    const json = await response.json()
+    return json.data.users as { id: string; email: string; name: string }[]
+  },
+
+  createProject: async (token: string, data: { name: string; description: string }) => {
+    const response = await fetch(`${API_URL}/projects`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+    if (!response.ok) throw new Error("Impossible de créer le projet")
+    const json = await response.json()
+    return json.data.project ?? json.data
+  },
+
+  updateProject: async (token: string, projectId: string, data: { name: string; description: string }) => {
+    const response = await fetch(`${API_URL}/projects/${projectId}`, {
+      method: "PUT",
+      headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+    if (!response.ok) throw new Error("Impossible de modifier le projet")
+    const json = await response.json()
+    return json.data.project ?? json.data
+  },
+
+  addContributor: async (token: string, projectId: string, email: string) => {
+    const response = await fetch(`${API_URL}/projects/${projectId}/contributors`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ email, role: "CONTRIBUTOR" }),
+    })
+    if (!response.ok) throw new Error("Impossible d'ajouter le contributeur")
+  },
+
+  removeContributor: async (token: string, projectId: string, userId: string) => {
+    const response = await fetch(`${API_URL}/projects/${projectId}/contributors/${userId}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+    if (!response.ok) throw new Error("Impossible de retirer le contributeur")
+  },
+
+  deleteProject: async (token: string, projectId: string) => {
+    const response = await fetch(`${API_URL}/projects/${projectId}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+    if (!response.ok) throw new Error("Impossible de supprimer le projet")
+  },
+
   deleteTask: async (token: string, projectId: string, taskId: string) => {
     const response = await fetch(`${API_URL}/projects/${projectId}/tasks/${taskId}`, {
       method: "DELETE",
