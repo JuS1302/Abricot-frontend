@@ -10,6 +10,7 @@ import Chip from '@/components/ui/Chip'
 import Tag from '@/components/ui/Tag'
 import UserIcon from '@/components/ui/UserIcon'
 import TaskCardFull from '@/components/ui/TaskCardFull'
+import TaskModal from '@/components/ui/TaskModal'
 import { getInitials } from '@/lib/utils'
 import type { Project, Task } from '@/types'
 
@@ -23,6 +24,8 @@ export default function ProjectPage() {
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [editingTask, setEditingTask] = useState<Task | null>(null)
 
   useEffect(() => {
     if (!token) return
@@ -59,6 +62,7 @@ export default function ProjectPage() {
   }
 
   return (
+    <>
     <main className="px-4 md:px-[100px] py-[60px] flex flex-col gap-10">
 
       {/* En-tête */}
@@ -97,7 +101,7 @@ export default function ProjectPage() {
 
         {/* Boutons actions */}
         <div className="flex items-center gap-3">
-          <Button className="w-full md:w-auto px-6!">Créer une tâche</Button>
+          <Button className="w-full md:w-auto px-6!" onClick={() => setShowCreateModal(true)}>Créer une tâche</Button>
           <button
             type="button"
             className="h-[50px] rounded-[10px] px-6 bg-primary text-white font-sans text-base flex items-center gap-2 hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
@@ -152,7 +156,7 @@ export default function ProjectPage() {
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col gap-3 shrink-0">
             <h2 className="font-display font-semibold text-lg text-text-primary leading-none">Tâches</h2>
-            <p className="font-sans text-sm text-text-muted leading-none">Par ordre de priorité</p>
+            <p className="font-sans text-size-base text-text-muted leading-none">Par ordre de priorité</p>
           </div>
 
           <div className="flex items-center gap-3 flex-wrap">
@@ -205,7 +209,7 @@ export default function ProjectPage() {
           ) : (
             filteredTasks.map(task => (
               <li key={task.id}>
-                <TaskCardFull task={task} />
+                <TaskCardFull task={task} onEdit={setEditingTask} />
               </li>
             ))
           )}
@@ -213,5 +217,36 @@ export default function ProjectPage() {
 
       </div>
     </main>
+
+    {showCreateModal && (
+      <TaskModal
+        projectId={id}
+        owner={project.owner ?? undefined}
+        members={project.members ?? []}
+        onClose={() => setShowCreateModal(false)}
+        onSaved={() => {
+          setShowCreateModal(false)
+          if (!token) return
+          api.getTasksByProject(token, id).then(setTasks)
+        }}
+      />
+    )}
+
+    {editingTask && (
+      <TaskModal
+
+        projectId={id}
+        owner={project.owner ?? undefined}
+        members={project.members ?? []}
+        task={editingTask}
+        onClose={() => setEditingTask(null)}
+        onSaved={() => {
+          setEditingTask(null)
+          if (!token) return
+          api.getTasksByProject(token, id).then(setTasks)
+        }}
+      />
+    )}
+    </>
   )
 }

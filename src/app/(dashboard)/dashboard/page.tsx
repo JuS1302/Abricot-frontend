@@ -8,6 +8,7 @@ import Chip from '@/components/ui/Chip'
 import TaskCard from '@/components/ui/TaskCard'
 import Button from '@/components/ui/Button'
 import Tag from '@/components/ui/Tag'
+import TaskModal from '@/components/ui/TaskModal'
 import type { Task, Project } from '@/types'
 
 type View = 'liste' | 'kanban'
@@ -25,6 +26,8 @@ export default function DashboardPage() {
   const [projects, setProjects] = useState<Project[]>([])
   const [search, setSearch] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [editingTask, setEditingTask] = useState<Task | null>(null)
+  const [editingProject, setEditingProject] = useState<Project | null>(null)
 
   useEffect(() => {
     if (!token) return
@@ -38,6 +41,24 @@ export default function DashboardPage() {
 
   const getProjectName = (projectId: string) =>
     projects.find(p => p.id === projectId)?.name ?? projectId
+
+  async function handleEditTask(task: Task) {
+    if (!token) return
+    const project = await api.getProjectById(token, task.projectId)
+    setEditingProject(project)
+    setEditingTask(task)
+  }
+
+  function handleModalClose() {
+    setEditingTask(null)
+    setEditingProject(null)
+  }
+
+  function handleModalSaved() {
+    handleModalClose()
+    if (!token) return
+    api.getTasks(token).then(setTasks)
+  }
 
   const filteredTasks = tasks.filter(t =>
     t.title.toLowerCase().includes(search.toLowerCase())
@@ -75,9 +96,21 @@ export default function DashboardPage() {
           search={search}
           onSearch={setSearch}
           getProjectName={getProjectName}
+          onEdit={handleEditTask}
         />
       ) : (
-        <VueKanban tasks={filteredTasks} getProjectName={getProjectName} />
+        <VueKanban tasks={filteredTasks} getProjectName={getProjectName} onEdit={handleEditTask} />
+      )}
+
+      {editingTask && editingProject && (
+        <TaskModal
+          projectId={editingTask.projectId}
+          owner={editingProject.owner}
+          members={editingProject.members ?? []}
+          task={editingTask}
+          onClose={handleModalClose}
+          onSaved={handleModalSaved}
+        />
       )}
 
     </main>
@@ -86,11 +119,12 @@ export default function DashboardPage() {
 
 // ─── Vue Liste ────────────────────────────────────────────────────────────────
 
-function VueListe({ tasks, search, onSearch, getProjectName }: {
+function VueListe({ tasks, search, onSearch, getProjectName, onEdit }: {
   tasks: Task[]
   search: string
   onSearch: (value: string) => void
   getProjectName: (id: string) => string
+  onEdit: (task: Task) => void
 }) {
   return (
     <section
@@ -146,7 +180,7 @@ function VueListe({ tasks, search, onSearch, getProjectName }: {
                 task={task}
                 variant="liste"
                 projectName={getProjectName(task.projectId)}
-                onView={id => console.log('voir tâche', id)}
+                onView={id => { const t = tasks.find(t => t.id === id); if (t) onEdit(t) }}
               />
             </li>
           ))
@@ -158,9 +192,10 @@ function VueListe({ tasks, search, onSearch, getProjectName }: {
 
 // ─── Vue Kanban ───────────────────────────────────────────────────────────────
 
-function VueKanban({ tasks, getProjectName }: {
+function VueKanban({ tasks, getProjectName, onEdit }: {
   tasks: Task[]
   getProjectName: (id: string) => string
+  onEdit: (task: Task) => void
 }) {
   return (
     <section
@@ -198,7 +233,7 @@ function VueKanban({ tasks, getProjectName }: {
                       task={task}
                       variant="kanban"
                       projectName={getProjectName(task.projectId)}
-                      onView={id => console.log('voir tâche', id)}
+                      onView={id => { const t = tasks.find(t => t.id === id); if (t) onEdit(t) }}
                     />
                   </li>
                 ))

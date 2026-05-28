@@ -9,6 +9,7 @@ import type { Task } from '@/types'
 
 type TaskCardFullProps = {
   task: Task
+  onEdit: (task: Task) => void
 }
 
 function formatDate(dateStr?: string): string | null {
@@ -16,7 +17,7 @@ function formatDate(dateStr?: string): string | null {
   return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })
 }
 
-export default function TaskCardFull({ task }: TaskCardFullProps) {
+export default function TaskCardFull({ task, onEdit }: TaskCardFullProps) {
   const [commentsOpen, setCommentsOpen] = useState(false)
   const date = formatDate(task.dueDate)
   const commentCount = task.comments?.length ?? 0
@@ -28,7 +29,8 @@ export default function TaskCardFull({ task }: TaskCardFullProps) {
       {/* Bouton ··· en position absolue pour ne pas gonfler la hauteur du titre */}
       <button
         type="button"
-        aria-label="Options de la tâche"
+        onClick={() => onEdit(task)}
+        aria-label="Modifier la tâche"
         className="absolute top-6 right-6 w-[57px] h-[57px] rounded-[10px] border border-border flex items-center justify-center text-text-muted hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         <svg width="16" height="4" viewBox="0 0 16 4" fill="none" aria-hidden="true">

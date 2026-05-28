@@ -6,9 +6,10 @@ type InputProps = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   className?: string
+  inputClassName?: string
 }
 
-export default function Input({ label, name, type = 'text', placeholder, value, onChange, className = '' }: InputProps) {
+export default function Input({ label, name, type = 'text', placeholder, value, onChange, className = '', inputClassName = '' }: InputProps) {
   return (
     <div className={`flex flex-col gap-[7px] ${className}`}>
       <label htmlFor={name} className="text-sm font-sans text-text-primary">
@@ -21,14 +22,15 @@ export default function Input({ label, name, type = 'text', placeholder, value, 
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="
+        className={`
           h-[53px] rounded-[4px] border border-border
           px-[17px]
           text-base font-sans text-text-primary
           placeholder:text-text-disabled
           outline-none focus:border-primary focus:ring-2 focus:ring-primary/30
           bg-white
-        "
+          ${inputClassName}
+        `}
       />
     </div>
   )

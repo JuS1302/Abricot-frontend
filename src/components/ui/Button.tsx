@@ -16,7 +16,7 @@ export default function Button({ children, type = 'button', onClick, disabled = 
       disabled={disabled}
       aria-label={ariaLabel}
       className={`
-        h-[50px] rounded-[10px] px-[74px] gap-[10px]
+        h-[50px] rounded-[10px] px-[20px] gap-[10px]
         bg-text-primary text-white
         text-base font-normal font-sans
         flex items-center justify-center

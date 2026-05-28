@@ -101,4 +101,49 @@ export const api = {
     return json.data.tasks ?? json.data ?? []
   },
 
+  createTask: async (token: string, projectId: string, data: {
+    title: string
+    description: string
+    dueDate: string
+    status: string
+    assignees: string[]
+  }) => {
+    const response = await fetch(`${API_URL}/projects/${projectId}/tasks`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data, priority: "MEDIUM" }),
+    })
+    if (!response.ok) throw new Error("Impossible de créer la tâche")
+    const json = await response.json()
+    return json.data
+  },
+
+  deleteTask: async (token: string, projectId: string, taskId: string) => {
+    const response = await fetch(`${API_URL}/projects/${projectId}/tasks/${taskId}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+    if (!response.ok) throw new Error("Impossible de supprimer la tâche")
+  },
+
+  updateTask: async (token: string, projectId: string, taskId: string, data: {
+    title: string
+    description: string
+    dueDate: string
+    status: string
+    assignees: string[]
+  }) => {
+    const response = await fetch(`${API_URL}/projects/${projectId}/tasks/${taskId}`, {
+      method: "PUT",
+      headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}))
+      throw new Error(err?.message ?? `Erreur ${response.status} : impossible de modifier la tâche`)
+    }
+    const json = await response.json()
+    return json.data
+  },
+
 }
