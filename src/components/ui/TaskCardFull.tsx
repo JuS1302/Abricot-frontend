@@ -26,7 +26,7 @@ export default function TaskCardFull({ task, onEdit }: TaskCardFullProps) {
   return (
     <article className="relative bg-bg-primary border border-border rounded-[10px] p-6 flex flex-col gap-4">
 
-      {/* Bouton ··· en position absolue pour ne pas gonfler la hauteur du titre */}
+      {/* Bouton action en position absolue */}
       <button
         type="button"
         onClick={() => onEdit(task)}

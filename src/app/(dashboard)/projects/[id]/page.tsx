@@ -18,7 +18,7 @@ import type { Project, Task } from '@/types'
 export default function ProjectPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
-  const { token } = useAuth()
+  const { token, user } = useAuth()
 
   const [project, setProject] = useState<Project | null>(null)
   const [tasks, setTasks] = useState<Task[]>([])
@@ -46,6 +46,21 @@ export default function ProjectPage() {
   })
 
   const members = project?.members ?? []
+
+  const currentMember = project?.members?.find(m => m.user.id === user?.id)
+  const role: 'admin' | 'contributor' | 'none' = !project
+    ? 'none'
+    : user?.id === project.owner?.id
+      ? 'admin'
+      : currentMember?.role === 'CONTRIBUTOR'
+        ? 'contributor'
+        : 'none'
+
+  useEffect(() => {
+    if (!isLoading && project && role === 'none') {
+      router.push('/projects')
+    }
+  }, [isLoading, project, role, router])
 
   if (isLoading) {
     return (
@@ -86,13 +101,15 @@ export default function ProjectPage() {
               <h1 className="font-display font-semibold text-2xl leading-none text-text-primary">
                 {project.name}
               </h1>
-              <button
-                type="button"
-                onClick={() => setShowEditProject(true)}
-                className="font-sans text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
-              >
-                Modifier
-              </button>
+              {role === 'admin' && (
+                <button
+                  type="button"
+                  onClick={() => setShowEditProject(true)}
+                  className="font-sans text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                >
+                  Modifier
+                </button>
+              )}
             </div>
             {project.description && (
               <p className="font-sans text-sm text-text-muted leading-none">
@@ -212,7 +229,10 @@ export default function ProjectPage() {
           ) : (
             filteredTasks.map(task => (
               <li key={task.id}>
-                <TaskCardFull task={task} onEdit={setEditingTask} />
+                <TaskCardFull
+                  task={task}
+                  onEdit={setEditingTask}
+                />
               </li>
             ))
           )}
