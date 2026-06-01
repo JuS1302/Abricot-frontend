@@ -12,6 +12,7 @@ import UserIcon from '@/components/ui/UserIcon'
 import TaskCardFull from '@/components/ui/TaskCardFull'
 import TaskModal from '@/components/ui/TaskModal'
 import ProjectModal from '@/components/ui/ProjectModal'
+import AIModal from '@/components/ui/AIModal'
 import { getInitials } from '@/lib/utils'
 import type { Project, Task } from '@/types'
 
@@ -28,6 +29,7 @@ export default function ProjectPage() {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const [showEditProject, setShowEditProject] = useState(false)
+  const [showAIModal, setShowAIModal] = useState(false)
 
   useEffect(() => {
     if (!token) return
@@ -124,6 +126,7 @@ export default function ProjectPage() {
           <Button className="w-full md:w-auto px-6!" onClick={() => setShowCreateModal(true)}>Créer une tâche</Button>
           <button
             type="button"
+            onClick={() => setShowAIModal(true)}
             className="h-[50px] rounded-[10px] px-6 bg-primary text-white font-sans text-base flex items-center gap-2 hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             ✦ IA
@@ -280,6 +283,20 @@ export default function ProjectPage() {
           api.getProjectById(token, id)
             .then(p => setProject(p ?? null))
             .catch(() => router.push('/projects'))
+        }}
+      />
+    )}
+
+    {showAIModal && (
+      <AIModal
+        projectId={id}
+        projectName={project.name}
+        projectDescription={project.description}
+        onClose={() => setShowAIModal(false)}
+        onSaved={() => {
+          setShowAIModal(false)
+          if (!token) return
+          api.getTasksByProject(token, id).then(setTasks)
         }}
       />
     )}
