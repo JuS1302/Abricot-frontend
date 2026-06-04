@@ -13,7 +13,7 @@ import TaskCardFull from '@/components/ui/TaskCardFull'
 import TaskModal from '@/components/ui/TaskModal'
 import ProjectModal from '@/components/ui/ProjectModal'
 import AIModal from '@/components/ui/AIModal'
-import { getInitials } from '@/lib/utils'
+import { getInitials, sortTasks } from '@/lib/utils'
 import type { Project, Task } from '@/types'
 
 export default function ProjectPage() {
@@ -41,11 +41,11 @@ export default function ProjectPage() {
       .finally(() => setIsLoading(false))
   }, [token, id])
 
-  const filteredTasks = tasks.filter(t => {
+  const filteredTasks = sortTasks(tasks.filter(t => {
     const matchSearch = t.title.toLowerCase().includes(search.toLowerCase())
     const matchStatus = statusFilter ? t.status === statusFilter : true
     return matchSearch && matchStatus
-  })
+  }))
 
   const members = project?.members ?? []
 

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { api } from '@/lib/api'
 import Image from 'next/image'
+import { sortTasks } from '@/lib/utils'
 import Chip from '@/components/ui/Chip'
 import TaskCard from '@/components/ui/TaskCard'
 import Button from '@/components/ui/Button'
@@ -62,9 +63,9 @@ export default function DashboardPage() {
     api.getTasks(token).then(setTasks)
   }
 
-  const filteredTasks = tasks.filter(t =>
+  const filteredTasks = sortTasks(tasks.filter(t =>
     t.title.toLowerCase().includes(search.toLowerCase())
-  )
+  ))
 
   return (
     <main className="px-4 md:px-[100px] py-[60px]">
