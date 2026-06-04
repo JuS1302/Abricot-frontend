@@ -222,4 +222,17 @@ export const api = {
     if (!response.ok) throw new Error("Impossible de supprimer la tâche")
   },
 
+  // ===== COMMENTAIRES =====
+
+  createComment: async (token: string, projectId: string, taskId: string, content: string) => {
+    const response = await fetch(`${API_URL}/projects/${projectId}/tasks/${taskId}/comments`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ content }),
+    })
+    if (!response.ok) throw new Error("Impossible d'ajouter le commentaire")
+    const json = await response.json()
+    return json.data
+  },
+
 }

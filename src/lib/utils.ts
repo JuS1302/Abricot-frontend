@@ -8,12 +8,12 @@ export function getInitials(name: string): string {
     .toUpperCase()
 }
 
-const STATUS_ORDER: Record<string, number> = { TODO: 0, IN_PROGRESS: 1, DONE: 2, CANCELLED: 3 }
+const STATUS_ORDER: Record<Task['status'], number> = { TODO: 0, IN_PROGRESS: 1, DONE: 2, CANCELLED: 3 }
 
 // Trie les tâches par statut (À faire → En cours → Terminée), puis par date d'échéance croissante
 export function sortTasks(tasks: Task[]): Task[] {
   return [...tasks].sort((a, b) => {
-    const statusDiff = (STATUS_ORDER[a.status] ?? 99) - (STATUS_ORDER[b.status] ?? 99)
+    const statusDiff = STATUS_ORDER[a.status] - STATUS_ORDER[b.status]
     if (statusDiff !== 0) return statusDiff
     if (!a.dueDate && !b.dueDate) return 0
     if (!a.dueDate) return 1

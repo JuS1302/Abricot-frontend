@@ -5,10 +5,13 @@ import Image from 'next/image'
 import Tag, { statusToVariant } from '@/components/ui/Tag'
 import UserIcon from '@/components/ui/UserIcon'
 import { getInitials } from '@/lib/utils'
-import type { Task } from '@/types'
+import { useAuth } from '@/context/AuthContext'
+import { api } from '@/lib/api'
+import type { Task, Comment } from '@/types'
 
 type TaskCardFullProps = {
   task: Task
+  projectId: string
   onEdit: (task: Task) => void
 }
 
@@ -17,11 +20,34 @@ function formatDate(dateStr?: string): string | null {
   return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })
 }
 
-export default function TaskCardFull({ task, onEdit }: TaskCardFullProps) {
+export default function TaskCardFull({ task, projectId, onEdit }: TaskCardFullProps) {
+  const { token, user } = useAuth()
   const [commentsOpen, setCommentsOpen] = useState(false)
+  const [comments, setComments] = useState<Comment[]>(task.comments ?? [])
+  const [newComment, setNewComment] = useState('')
+  const [isSending, setIsSending] = useState(false)
   const date = formatDate(task.dueDate)
-  const commentCount = task.comments?.length ?? 0
   const statusVariant = statusToVariant(task.status)
+
+  async function handleAddComment() {
+    if (!token || !user || newComment.trim() === '') return
+    setIsSending(true)
+    try {
+      const created = await api.createComment(token, projectId, task.id, newComment.trim())
+      // L'API ne renvoie pas toujours l'author peuplé, on le construit avec l'utilisateur connecté
+      const comment: Comment = {
+        id: created?.id ?? crypto.randomUUID(),
+        content: newComment.trim(),
+        taskId: task.id,
+        authorId: user.id,
+        author: user,
+      }
+      setComments(prev => [...prev, comment])
+      setNewComment('')
+    } finally {
+      setIsSending(false)
+    }
+  }
 
   return (
     <article className="relative bg-bg-primary border border-border rounded-[10px] p-6 flex flex-col gap-4">
@@ -92,7 +118,7 @@ export default function TaskCardFull({ task, onEdit }: TaskCardFullProps) {
         aria-expanded={commentsOpen}
         className="flex justify-between items-center w-full font-sans text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
       >
-        <span>Commentaires ({commentCount})</span>
+        <span>Commentaires ({comments.length})</span>
         <svg
           width="12" height="7" viewBox="0 0 12 7"
           fill="none" aria-hidden="true"
@@ -105,10 +131,11 @@ export default function TaskCardFull({ task, onEdit }: TaskCardFullProps) {
       {/* Contenu des commentaires */}
       {commentsOpen && (
         <div className="flex flex-col gap-3">
-          {commentCount === 0 ? (
+          {/* Liste des commentaires existants */}
+          {comments.length === 0 ? (
             <p className="font-sans text-sm text-text-muted">Aucun commentaire.</p>
           ) : (
-            task.comments?.map(comment => (
+            comments.map(comment => (
               <div key={comment.id} className="flex flex-col gap-2 p-3 bg-bg-secondary rounded-[8px]">
                 <div className="flex items-center gap-2">
                   <UserIcon
@@ -124,6 +151,27 @@ export default function TaskCardFull({ task, onEdit }: TaskCardFullProps) {
               </div>
             ))
           )}
+
+          {/* Formulaire d'ajout de commentaire */}
+          <div className="flex gap-2 mt-1">
+            <textarea
+              value={newComment}
+              onChange={e => setNewComment(e.target.value)}
+              placeholder="Ajouter un commentaire…"
+              rows={1}
+              aria-label="Nouveau commentaire"
+              className="flex-1 rounded-[4px] border border-border px-3 py-2 font-sans text-sm text-text-primary placeholder:text-text-disabled outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 bg-white resize-none"
+            />
+            <button
+              type="button"
+              onClick={handleAddComment}
+              disabled={isSending || newComment.trim() === ''}
+              aria-label="Envoyer le commentaire"
+              className="h-[38px] self-end px-4 rounded-[6px] bg-primary text-white font-sans text-sm hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-40"
+            >
+              Envoyer
+            </button>
+          </div>
         </div>
       )}
 

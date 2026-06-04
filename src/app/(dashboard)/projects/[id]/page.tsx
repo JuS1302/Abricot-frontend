@@ -234,6 +234,7 @@ export default function ProjectPage() {
               <li key={task.id}>
                 <TaskCardFull
                   task={task}
+                  projectId={id}
                   onEdit={setEditingTask}
                 />
               </li>
