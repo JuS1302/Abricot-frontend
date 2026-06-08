@@ -60,9 +60,6 @@ export default function LoginPage() {
               {isLoading ? 'Connexion...' : 'Se connecter'}
             </Button>
 
-            <Link href="/forgot-password" className="text-center">
-              Mot de passe oublié?
-            </Link>
           </form>
         </div>
 

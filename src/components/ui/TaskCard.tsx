@@ -31,21 +31,21 @@ export default function TaskCard({ task, variant, projectName, onView }: TaskCar
     <div className={`flex gap-3 text-xs font-sans text-text-muted ${isKanban ? 'items-start' : 'items-center'}`}>
       {/* Nom du projet : wrappe en kanban, fixe en liste */}
       <span className={`flex items-center gap-2 ${isKanban ? 'min-w-0' : 'shrink-0 whitespace-nowrap'}`}>
-        <Image src="/Nom-projet.svg" alt="Icon" width={14} height={14} className="shrink-0" />
+        <Image src="/Nom-projet.svg" alt="" aria-hidden="true" width={14} height={14} className="shrink-0" />
         {projectName ?? task.projectId}
       </span>
       {date && (
         <>
           <span aria-hidden="true" className="shrink-0">|</span>
           <span className="flex items-center gap-2 shrink-0 whitespace-nowrap">
-            <Image src="/Date.svg" alt="Icon" width={14} height={14} />
+            <Image src="/Date.svg" alt="" aria-hidden="true" width={14} height={14} />
             {date}
           </span>
         </>
       )}
       <span aria-hidden="true" className="shrink-0">|</span>
       <span className="flex items-center gap-2 shrink-0 whitespace-nowrap">
-        <Image src="/Commentaire.svg" alt="Icon" width={14} height={14} />
+        <Image src="/Commentaire.svg" alt="" aria-hidden="true" width={14} height={14} />
         <span>
           <span className="sr-only">Commentaires : </span>
           {commentCount}

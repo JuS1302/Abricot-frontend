@@ -109,14 +109,14 @@ export default function AccountPage() {
           />
         </div>
 
-        {/* Feedback */}
+        {/* role="alert" : le lecteur d'écran annonce le message automatiquement (WCAG 4.1.3) */}
         {success && (
-          <p className="font-sans text-sm text-primary">
+          <p role="alert" className="font-sans text-sm text-primary">
             Informations mises à jour avec succès.
           </p>
         )}
         {error && (
-          <p className="font-sans text-sm text-danger">
+          <p role="alert" className="font-sans text-sm text-danger">
             {error}
           </p>
         )}
