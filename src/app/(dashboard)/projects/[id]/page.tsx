@@ -208,7 +208,7 @@ export default function ProjectPage() {
             {/* Recherche */}
             <div className="relative flex-1">
               <Image
-                src="/Loupe.svg" alt="" aria-hidden="true" width={14} height={14}
+                src="/Loupe.svg" alt="loupe" aria-hidden="true" width={14} height={14}
                 className="absolute right-[32px] top-1/2 -translate-y-1/2 pointer-events-none"
               />
               <input

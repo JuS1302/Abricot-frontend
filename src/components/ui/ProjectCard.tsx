@@ -56,7 +56,7 @@ export default function ProjectCard({ project, tasks }: ProjectCardProps) {
       {/* Équipe */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-1.5 text-text-muted">
-          <Image src="/Membres.svg" alt="" aria-hidden="true" width={12} height={11} />
+          <Image src="/Membres.svg" alt="membres" aria-hidden="true" width={12} height={11} />
           <span className="font-sans text-[10px] leading-none">Équipe ({members.length})</span>
         </div>
 

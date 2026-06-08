@@ -6,6 +6,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // lang="fr" obligatoire pour l'accessibilité : permet aux lecteurs d'écran
     // de choisir la bonne voix de synthèse (WCAG 3.1.1)
     <html lang="fr">
+      <head>
+        <title>Abricot</title>
+      </head>
       <body className="bg-bg-secondary">
         <AuthProvider>{children}</AuthProvider>
       </body>
