@@ -223,7 +223,7 @@ function VueKanban({ tasks, getProjectName, onEdit }: {
           <div key={col.status} className="flex-1 border border-danger-light rounded-[10px] p-6">
 
             {/* En-tête de colonne */}
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-3 mb-8">
               <h2 className="font-display font-semibold text-lg text-text-primary">
                 {col.label}
               </h2>

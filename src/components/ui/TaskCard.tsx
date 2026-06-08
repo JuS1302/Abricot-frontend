@@ -116,7 +116,7 @@ export default function TaskCard({ task, variant, projectName, onView }: TaskCar
       className={`${baseClasses} flex flex-col gap-[32px] w-full md:w-[371px]`}
     >
       {/* Haut : titre + tag inline, puis description */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-3">
         <div className="flex justify-between items-start gap-2">
           <h3 className="font-display font-semibold text-lg text-text-primary leading-none">
             {task.title}
