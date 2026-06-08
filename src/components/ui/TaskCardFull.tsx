@@ -86,7 +86,7 @@ export default function TaskCardFull({ task, projectId, onEdit }: TaskCardFullPr
       {date && (
         <div className="flex items-center gap-2 font-sans text-xs text-text-primary">
           <span>Échéance :</span>
-          <Image src="/Calendrier-noir.svg" alt="Icon" aria-hidden="true" width={14} height={14} />
+          <Image src="/Calendrier-noir.svg" alt="" aria-hidden="true" width={14} height={16} />
           <span>{date}</span>
         </div>
       )}

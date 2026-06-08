@@ -10,14 +10,16 @@ type ChipProps = {
   onClick: () => void
 }
 
-const config: Record<ChipView, { label: string; icon: string }> = {
-  liste:       { label: 'Liste',       icon: '/Liste.svg' },
-  kanban:      { label: 'Kanban',      icon: '/Kanban.svg' },
-  calendrier:  { label: 'Calendrier',  icon: '/Kanban.svg' },
+// iconW/iconH correspondent aux proportions réelles de chaque SVG pour éviter
+// le warning Next.js "width or height modified but not the other" (Tailwind height:auto)
+const config: Record<ChipView, { label: string; icon: string; iconW: number; iconH: number }> = {
+  liste:       { label: 'Liste',       icon: '/Liste.svg',  iconW: 16, iconH: 16 }, // viewBox 16×16
+  kanban:      { label: 'Kanban',      icon: '/Kanban.svg', iconW: 15, iconH: 17 }, // viewBox 15×17
+  calendrier:  { label: 'Calendrier',  icon: '/Kanban.svg', iconW: 15, iconH: 17 },
 }
 
 export default function Chip({ view, active, onClick }: ChipProps) {
-  const { label, icon } = config[view]
+  const { label, icon, iconW, iconH } = config[view]
 
   return (
     <button
@@ -37,7 +39,7 @@ export default function Chip({ view, active, onClick }: ChipProps) {
         }
       `}
     >
-      <Image src={icon} alt="Icon" width={16} height={16} className="shrink-0" />
+      <Image src={icon} alt="" aria-hidden="true" width={iconW} height={iconH} className="shrink-0" />
       {label}
     </button>
   )

@@ -70,10 +70,12 @@ export default function RegisterPage() {
 
       {/* ===== DROITE - Photo (cachée sur mobile) ===== */}
       <div className="hidden md:block md:w-3/5 relative">
+        {/* priority : image LCP above-the-fold, préchargée pour améliorer les Core Web Vitals */}
         <Image
           src="/Login.jpg"
           alt="Matériel de bureau rangé"
           fill
+          priority
           className="object-cover"
         />
       </div>

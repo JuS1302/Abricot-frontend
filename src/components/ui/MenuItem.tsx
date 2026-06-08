@@ -9,9 +9,12 @@ type MenuItemProps = {
   label: string
   icon: string
   iconActive: string
+  // Dimensions réelles du SVG (viewBox) pour éviter le warning Next.js height:auto
+  iconWidth?: number
+  iconHeight?: number
 }
 
-export default function MenuItem({ href, label, icon, iconActive }: MenuItemProps) {
+export default function MenuItem({ href, label, icon, iconActive, iconWidth = 24, iconHeight = 24 }: MenuItemProps) {
   const pathname = usePathname()
   const isActive = pathname.startsWith(href)
 
@@ -33,9 +36,10 @@ export default function MenuItem({ href, label, icon, iconActive }: MenuItemProp
     >
       <Image
         src={isActive ? iconActive : icon}
-        alt="Icon de menu"
-        width={24}
-        height={24}
+        alt=""
+        aria-hidden="true"
+        width={iconWidth}
+        height={iconHeight}
         className="shrink-0"
       />
       {/* sr-only sur mobile : invisible visuellement mais lu par les lecteurs d'écran */}

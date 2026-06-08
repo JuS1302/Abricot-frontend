@@ -20,17 +20,22 @@ export default function Navbar() {
         <Logo />
 
         <div className="flex items-center gap-2 md:gap-4">
+          {/* Group.svg viewBox 24×24, Folder.svg viewBox 29×23 → height réel = 24×23/29 = 19 */}
           <MenuItem
             href="/dashboard"
             label="Tableau de bord"
             icon="/Group.svg"
             iconActive="/Group-white.svg"
+            iconWidth={24}
+            iconHeight={24}
           />
           <MenuItem
             href="/projects"
             label="Projets"
             icon="/Folder.svg"
             iconActive="/Folder-white.svg"
+            iconWidth={24}
+            iconHeight={19}
           />
         </div>
 

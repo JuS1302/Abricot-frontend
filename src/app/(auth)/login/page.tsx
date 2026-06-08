@@ -26,7 +26,7 @@ export default function LoginPage() {
 
       {/* ===== GAUCHE - Formulaire ===== */}
       <div className="w-full md:w-2/5 bg-white flex flex-col px-8 md:px-[100px] py-10 md:py-[60px]">
-        <Logo width={253} height={32} className="self-center" />
+        <Logo width={253} height={33} className="self-center" />
 
         <div className="flex-1 flex flex-col justify-center gap-8">
           <h1 className="font-display font-bold text-3xl md:text-[40px] leading-none text-primary text-center">
@@ -71,10 +71,12 @@ export default function LoginPage() {
 
       {/* ===== DROITE - Photo (cachée sur mobile) ===== */}
       <div className="hidden md:block md:w-3/5 relative">
+        {/* priority : image LCP above-the-fold, préchargée pour améliorer les Core Web Vitals */}
         <Image
           src="/Login.jpg"
           alt="Matériel de bureau rangé"
           fill
+          priority
           className="object-cover"
         />
       </div>

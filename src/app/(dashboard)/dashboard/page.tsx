@@ -158,7 +158,7 @@ function VueListe({ tasks, search, onSearch, getProjectName, onEdit }: {
         <div className="relative w-full md:w-[280px]">
           <Image
             src="/Loupe.svg"
-            alt="Icon Loupe"
+            alt=""
             aria-hidden="true"
             width={14}
             height={14}
