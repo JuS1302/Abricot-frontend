@@ -77,6 +77,7 @@ export default function LoginPage() {
           alt="Matériel de bureau rangé"
           fill
           priority
+          sizes="60vw"
           className="object-cover"
         />
       </div>
