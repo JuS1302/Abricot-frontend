@@ -2,7 +2,7 @@ import mockData from "../data/mock-data.json"
 
 // Passe à false quand le backend est lancé
 const USE_MOCK = false
-const API_URL = "http://localhost:8000"
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
 export const api = {
 
