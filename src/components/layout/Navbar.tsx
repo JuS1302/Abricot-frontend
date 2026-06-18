@@ -8,7 +8,7 @@ import UserIcon from '@/components/ui/UserIcon'
 import { useAuth } from '@/context/AuthContext'
 
 export default function Navbar() {
-  const { initials } = useAuth()
+  const { initials, user } = useAuth()
   const pathname = usePathname()
   const isAccount = pathname === '/account'
 
@@ -40,8 +40,11 @@ export default function Navbar() {
         </div>
 
         {/* aria-label nécessaire : UserIcon n'a pas de texte visible pour les lecteurs d'écran */}
-        <Link href="/account" aria-label="Mon compte">
+        <Link href="/account" aria-label="Mon compte" className="relative inline-block">
           <UserIcon initials={initials} color={isAccount ? 'active' : 'primary'} />
+          {!user?.name && (
+            <span className="absolute top-0 right-0 w-3 h-3 bg-primary rounded-full border-2 border-white" />
+          )}
         </Link>
 
       </nav>

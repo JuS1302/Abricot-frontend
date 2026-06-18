@@ -35,7 +35,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(updatedUser)
   }
 
-  const initials = user?.name ? getInitials(user.name) : ''
+  const initials = user?.name
+    ? getInitials(user.name)
+    : user?.email
+      ? user.email[0].toUpperCase()
+      : ''
 
   return (
     <AuthContext.Provider value={{ token, user, initials, login, logout, updateUser }}>
