@@ -35,7 +35,9 @@ Maximum 5 tâches.`,
     const cleaned = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
 
     const tasks = JSON.parse(cleaned)
+
     return NextResponse.json({ tasks })
+
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
     console.error('[AI route error]', message)
