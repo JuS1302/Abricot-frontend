@@ -76,7 +76,7 @@ export default function DashboardPage() {
           <h1 className="font-display font-semibold text-2xl leading-none text-text-primary">
             Tableau de bord
           </h1>
-          <p className="font-sans text-lg text-text-muted leading-none">
+          <p className="font-sans text-lg text-text-muted leading-snug">
             Bonjour {user?.name}, voici un aperçu de vos projets et tâches
           </p>
         </div>
