@@ -12,7 +12,7 @@ import { useLogin } from '@/hooks/useLogin'
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { handleLogin, error, isLoading } = useLogin()
+  const { handleLogin, handleDemoLogin, error, isLoading } = useLogin()
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,7 +22,7 @@ export default function LoginPage() {
   }
 
   const handleDemo = async () => {
-    const success = await handleLogin('demo@abricot.com', 'Demo1234!')
+    const success = await handleDemoLogin()
     if (success) router.push('/dashboard')
   }
 

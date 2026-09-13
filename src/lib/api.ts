@@ -4,12 +4,20 @@ import mockData from "../data/mock-data.json"
 const USE_MOCK = false
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
+// Le bouton "Voir la démo" active ce mode : les données viennent alors
+// du fichier mock-data.json au lieu du vrai backend, pour que la démo
+// fonctionne même si le backend est indisponible ou sans compte démo créé.
+let demoMode = false
+
 export const api = {
+
+  enableDemoMode: () => { demoMode = true },
+  disableDemoMode: () => { demoMode = false },
 
   // ===== AUTH =====
 
   login: async (email: string, password: string) => {
-    if (USE_MOCK) return mockData.auth
+    if (USE_MOCK || demoMode) return mockData.auth
     const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -35,7 +43,7 @@ export const api = {
   // ===== UTILISATEURS =====
 
   getUserInfo: async (token: string) => {
-    if (USE_MOCK) return mockData.userInfo
+    if (USE_MOCK || demoMode) return mockData.userInfo
     const response = await fetch(`${API_URL}/users/me`, {
       headers: { "Authorization": `Bearer ${token}` },
     })
@@ -76,7 +84,7 @@ export const api = {
   // ===== PROJETS =====
 
   getProjects: async (token: string) => {
-    if (USE_MOCK) return mockData.projects
+    if (USE_MOCK || demoMode) return mockData.projects
     const response = await fetch(`${API_URL}/projects`, {
       headers: { "Authorization": `Bearer ${token}` },
     })
@@ -86,7 +94,7 @@ export const api = {
   },
 
   getProjectById: async (token: string, projectId: string) => {
-    if (USE_MOCK) return mockData.projects.find(p => p.id === projectId)
+    if (USE_MOCK || demoMode) return mockData.projects.find(p => p.id === projectId)
     const response = await fetch(`${API_URL}/projects/${projectId}`, {
       headers: { "Authorization": `Bearer ${token}` },
     })
@@ -146,7 +154,7 @@ export const api = {
 
   // Charge les tâches de tous les projets et les retourne à plat
   getTasks: async (token: string) => {
-    if (USE_MOCK) return mockData.tasks
+    if (USE_MOCK || demoMode) return mockData.tasks
     const projectsResponse = await fetch(`${API_URL}/projects`, {
       headers: { "Authorization": `Bearer ${token}` },
     })
@@ -168,7 +176,7 @@ export const api = {
   },
 
   getTasksByProject: async (token: string, projectId: string) => {
-    if (USE_MOCK) return mockData.tasks.filter(t => t.projectId === projectId)
+    if (USE_MOCK || demoMode) return mockData.tasks.filter(t => t.projectId === projectId)
     const response = await fetch(`${API_URL}/projects/${projectId}/tasks`, {
       headers: { "Authorization": `Bearer ${token}` },
     })

@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState } from 'react'
 import { getInitials } from '@/lib/utils'
+import { api } from '@/lib/api'
 import type { User } from '@/types'
 
 type AuthContextType = {
@@ -27,6 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const logout = () => {
+    api.disableDemoMode()
     setToken(null)
     setUser(null)
   }

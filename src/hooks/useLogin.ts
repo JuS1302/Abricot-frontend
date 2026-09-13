@@ -12,7 +12,6 @@ export const useLogin = () => {
     setError(null)
     try {
       const { token, user } = await api.login(email, password)
-      console.log(token);
       login(token, user)
       return true
     } catch (err: unknown) {
@@ -23,5 +22,12 @@ export const useLogin = () => {
     }
   }
 
-  return { handleLogin, error, isLoading }
+  // Connexion démo : active le mode démo (données fictives, sans backend)
+  // puis se connecte avec des identifiants qui ne sont jamais vérifiés.
+  const handleDemoLogin = async (): Promise<boolean> => {
+    api.enableDemoMode()
+    return handleLogin('demo@abricot.com', 'Demo1234!')
+  }
+
+  return { handleLogin, handleDemoLogin, error, isLoading }
 }
