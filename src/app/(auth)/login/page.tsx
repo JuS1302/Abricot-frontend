@@ -61,13 +61,8 @@ export default function LoginPage() {
               <p role="alert" className="text-sm font-sans text-danger">{error}</p>
             )}
 
-            <Button type="submit" disabled={isLoading} className="w-full mt-2">
-              {isLoading ? 'Connexion...' : 'Se connecter'}
-            </Button>
-
             <Button
               type="button"
-              variant="outline"
               onClick={handleDemo}
               disabled={isLoading}
               className="w-full mt-2"
