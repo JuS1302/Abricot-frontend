@@ -21,6 +21,11 @@ export default function LoginPage() {
     if (success) router.push('/dashboard')
   }
 
+  const handleDemo = async () => {
+    const success = await handleLogin('demo@abricot.com', 'Demo1234!')
+    if (success) router.push('/dashboard')
+  }
+
   return (
     <div className="min-h-screen flex">
 
@@ -58,6 +63,15 @@ export default function LoginPage() {
 
             <Button type="submit" disabled={isLoading} className="w-full mt-2">
               {isLoading ? 'Connexion...' : 'Se connecter'}
+            </Button>
+
+            <Button
+              type="button"
+              onClick={handleDemo}
+              disabled={isLoading}
+              className="w-full mt-2 bg-white text-text-primary border border-text-primary hover:bg-gray-50"
+            >
+              {isLoading ? 'Connexion...' : 'Voir la démo'}
             </Button>
 
           </form>
