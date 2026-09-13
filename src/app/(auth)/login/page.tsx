@@ -67,9 +67,10 @@ export default function LoginPage() {
 
             <Button
               type="button"
+              variant="outline"
               onClick={handleDemo}
               disabled={isLoading}
-              className="w-full mt-2 bg-white text-text-primary border border-text-primary hover:bg-gray-50"
+              className="w-full mt-2"
             >
               {isLoading ? 'Connexion...' : 'Voir la démo'}
             </Button>

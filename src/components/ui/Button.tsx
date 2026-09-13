@@ -1,6 +1,7 @@
 type ButtonProps = {
   children: React.ReactNode
   type?: 'button' | 'submit' | 'reset'
+  variant?: 'solid' | 'outline'
   onClick?: () => void
   disabled?: boolean
   className?: string
@@ -8,7 +9,12 @@ type ButtonProps = {
   'aria-label'?: string
 }
 
-export default function Button({ children, type = 'button', onClick, disabled = false, className = '', 'aria-label': ariaLabel }: ButtonProps) {
+const variantStyles = {
+  solid: 'bg-text-primary text-white',
+  outline: 'bg-white text-text-primary border border-text-primary',
+}
+
+export default function Button({ children, type = 'button', variant = 'solid', onClick, disabled = false, className = '', 'aria-label': ariaLabel }: ButtonProps) {
   return (
     <button
       type={type}
@@ -17,7 +23,7 @@ export default function Button({ children, type = 'button', onClick, disabled = 
       aria-label={ariaLabel}
       className={`
         h-[50px] rounded-[10px] px-[20px] gap-[10px]
-        bg-text-primary text-white
+        ${variantStyles[variant]}
         text-base font-normal font-sans
         flex items-center justify-center
         transition-opacity disabled:opacity-50 cursor-pointer
